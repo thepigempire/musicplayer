@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+<title>TPE Music Player</title>
+</head>
+<body>
+    <div id="website-title">
+        <h1>TPE music player</h1>
+    </div>
+    <div id="music-player">
+        <div id="song-title">Wii Shop Theme (Bank theme) - Nintendo</div>
+        <audio id="audio-player" controls loop onended="handleSongEnd()">
+            <source src="https://thepigempire.github.io/technical/audio/aroundserver/bank.mp3" type="audio/mpeg">
+        </audio>
+        <div id="controls">
+            <button id="prev-btn">Previous</button>
+            <button id="play-pause-btn">Play</button>
+            <button id="next-btn">Next</button>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+        </div>
+    </div>
+<script>
+    const audioPlayer = document.getElementById('audio-player');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const volumeSlider = document.getElementById('volume-slider');
+    
+    let currentSongIndex = 0;
+    
+    const songs = [
+        { name: 'Wii Shop Theme (Bank theme) - Nintendo', src: 'https://thepigempire.github.io/technical/audio/aroundserver/bank.mp3' },
+        { name: 'The Police Workflow (IPPA theme) - The Pig Empire', src: 'https://thepigempire.github.io/technical/audio/aroundserver/ippa.mp3' },
+        { name: 'In The Cellar (Jail theme) - The Pig Empire', src: 'https://thepigempire.github.io/technical/audio/aroundserver/jail.mp3' },
+        { name: 'The Start Of It All (Spawn theme) - The Pig Empire', src: 'https://thepigempire.github.io/technical/audio/aroundserver/spawn.wav' },
+        { name: 'Interstellar State (State Admission theme) - The Pig Empire', src: 'https://thepigempire.github.io/technical/audio/aroundserver/stateadmission.mp3' }
+    ];
+    
+    function playPause() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playPauseBtn.textContent = 'Pause';
+        } else {
+            audioPlayer.pause();
+            playPauseBtn.textContent = 'Play';
+        }
+    }
+    
+    function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        audioPlayer.src = songs[currentSongIndex].src;
+        document.getElementById('song-title').textContent = songs[currentSongIndex].name;
+        audioPlayer.play();
+    }
+    
+    function prevSong() {
+        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+        audioPlayer.src = songs[currentSongIndex].src;
+        document.getElementById('song-title').textContent = songs[currentSongIndex].name;
+        audioPlayer.play();
+    }
+    
+    function handleSongEnd() {
+      nextSong();
+  }
+
+  function setVolume() {
+      audioPlayer.volume = volumeSlider.value;
+  }
+
+  volumeSlider.addEventListener('input', setVolume);
+  audioPlayer.controls = false;
+
+  audioPlayer.addEventListener('play', function(event) {
+      event.preventDefault();
+  });
+
+  audioPlayer.addEventListener('pause', function(event) {
+      event.preventDefault();
+  });
+
+  audioPlayer.addEventListener('volumechange', function(event) {
+      event.preventDefault();
+  });
+
+  audioPlayer.addEventListener('seeking', function(event) {
+      event.preventDefault();
+  });
+
+  audioPlayer.addEventListener('seeked', function(event) {
+      event.preventDefault();
+  });
+    
+  playPauseBtn.addEventListener('click', playPause);
+  nextBtn.addEventListener('click', nextSong);
+  prevBtn.addEventListener('click', prevSong);
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const songParam = urlParams.get('song');
+
+    if (songParam !== null && songParam !== '' && songParam >= 0 && songParam < songs.length) {
+        currentSongIndex = parseInt(songParam);
+        audioPlayer.src = songs[currentSongIndex].src;
+        document.getElementById('song-title').textContent = songs[currentSongIndex].name;
+        audioPlayer.play();
+    }
+});
+</script>
+
+</body>
+</html>
