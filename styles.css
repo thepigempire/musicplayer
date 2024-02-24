@@ -29,9 +29,10 @@ body {
 }
 button {
     background-color: #ed488b;
-    color: white; /* Set text color to white for better contrast */
-    padding: 5px 10px; /* Add padding for better button appearance */
-    border: none; /* Remove default button border */
-    cursor: pointer; /* Change cursor to pointer on hover */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
     margin-right: 5px
+    padding: 10px 20px;
 }
