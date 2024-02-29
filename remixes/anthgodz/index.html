@@ -104,6 +104,9 @@
         audioPlayer.play();
     }
 });
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("website-title").querySelector("h1").textContent = document.getElementById("website-title").querySelector("h1").textContent + location.pathname.replace('/musicplayer', '');
+});
 </script>
 
 </body>
